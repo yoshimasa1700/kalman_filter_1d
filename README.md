@@ -1,4 +1,4 @@
-# kalman_filter_1d
+# kalman_filter_1dim
 
 - simulation of kalman filter
 
