@@ -37,7 +37,7 @@ class KalmanFilter():
 
     def __init__(self):
         self.x_hat = 0.0  # Estimated system status.
-        self.p = 0.0  # Covariance matrix.
+        self.p = 5.0  # Covariance matrix.
 
     def run(self, y):
         # Calc a priori estimate
@@ -95,8 +95,10 @@ def main():
     # input sample signals to kalman filter and collect reuslts.
     x_hat = np.zeros(N)
     g = np.zeros(N)
+    p = np.zeros(N)
 
     for k in range(N):
+        p[k] = kf.p
         x_hat[k] = kf.run(ss.y[k])
         g[k] = kf.g
 
@@ -112,9 +114,16 @@ def main():
 
     plot_result(
         [
-            (g, "kalman gain")
+            (g, "kalman gain"),
         ],
         "kalman_gain.png"
+    )
+
+    plot_result(
+        [
+            (p, "Covariance of system status")
+        ],
+        "P.png"
     )
 
 
