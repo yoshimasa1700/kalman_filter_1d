@@ -4,6 +4,8 @@
 
 ![sample image](https://github.com/yoshimasa1700/kalman_filter_1d/blob/media/kalman_filter_1dim.png?raw=true)
 
+![sample image](https://github.com/yoshimasa1700/kalman_filter_1d/blob/media/P.png?raw=true)
+
 ![sample image](https://github.com/yoshimasa1700/kalman_filter_1d/blob/media/kalman_gain.png?raw=true)
 
 - reference
