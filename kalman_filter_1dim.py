@@ -47,11 +47,38 @@ class KalmanFilter():
         # Calc kalman gain.
         g = (p_pri * self.c) / (self.c * p_pri * self.c + self.R)
 
+        # store kalman gain for study.
+        self.g = g
+
         # Calc filtered result.
         self.x_hat = x_hat_pri + g * (y - self.c * x_hat_pri)
         self.p = (1 - g * self.c) * p_pri
 
         return self.x_hat
+
+
+def plot_result(value_and_label_list, image_name,
+                xlabel="time", ylabel="signal",
+                show=False):
+    fig = plt.figure(figsize=(20, 10))
+
+    ax = fig.add_subplot(111)
+
+    for v, l in value_and_label_list:
+        ax.plot(v, label=l)
+
+    ax.grid()
+
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+
+    ax.legend()
+
+    if show:
+        plt.show()
+    plt.savefig(image_name)
+
+    plt.close(fig)
 
 
 def main():
@@ -67,28 +94,28 @@ def main():
 
     # input sample signals to kalman filter and collect reuslts.
     x_hat = np.zeros(N)
+    g = np.zeros(N)
 
     for k in range(N):
         x_hat[k] = kf.run(ss.y[k])
+        g[k] = kf.g
 
     # plot results.
-    fig = plt.figure(figsize=(20, 10))
+    plot_result(
+        [
+            (ss.x, "ground truth x"),
+            (ss.y, "observation y"),
+            (x_hat, "estimated x"),
+        ],
+        "kalman_filter_1dim.png"
+    )
 
-    ax = fig.add_subplot(111)
-    ax.plot(ss.x, label="ground truth x")
-    ax.plot(ss.y, label="observation y")
-
-    ax.plot(x_hat, label="estimated x")
-    ax.grid()
-
-    ax.set_xlabel("time")
-    ax.set_ylabel("signal")
-
-    ax.legend()
-
-    plt.show()
-
-    plt.close(fig)
+    plot_result(
+        [
+            (g, "kalman gain")
+        ],
+        "kalman_gain.png"
+    )
 
 
 if __name__ == "__main__":
