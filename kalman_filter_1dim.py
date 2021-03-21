@@ -102,12 +102,15 @@ def main():
         x_hat[k] = kf.run(ss.y[k])
         g[k] = kf.g
 
+    error = np.abs(ss.x - x_hat)
+
     # plot results.
     plot_result(
         [
             (ss.x, "ground truth x"),
             (ss.y, "observation y"),
             (x_hat, "estimated x"),
+            (error, "error"),
         ],
         "kalman_filter_1dim.png"
     )
